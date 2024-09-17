@@ -1,0 +1,9 @@
+#!/bin/bash
+
+VERSION=2.0.1
+APP=mastercard_inbound-$VERSION.jar
+
+cp ../target/$APP .
+
+docker build -f mastercard.Dockerfile -t switchlink1.azurecr.io/mastercard_inbound:$VERSION .  && rm -rf $APP
+docker push switchlink1.azurecr.io/mastercard_inbound:$VERSION

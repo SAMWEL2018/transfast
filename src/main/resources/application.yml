@@ -1,0 +1,67 @@
+spring:
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    password: ${APP_DB_PASSWORD:root}
+    username: ${APP_DB_USERNAME:postgres}
+    url: jdbc:postgresql://${APP_DB_HOST:localhost}:${APP_DB_PORT:5432}/${APP_DB_NAME:transfast}
+app:
+  name: MASTERCARD_INBOUND
+  version: 2.0.1
+  mobile_api_user: ${MOBILE_API_USER:API_USER3}
+  mobile_api_password: ${MOBILE_API_PASSWORD:Iop8*7}
+  mobile_branch_id: ${MOBILE_BRANCH_ID:KE040008}
+  mobile_form_of_payment: ${MOBILE_FORM_OF_PAYMENT:CD}
+  bank_api_user: ${BANK_API_USER:API_USER2}
+  bank_api_password: ${BANK_API_PASSWORD:Asd@34}
+  bank_branch_id: ${BANK_BRANCH_ID:KE040010}
+  bank_form_of_payment: ${BANK_FORM_OF_PAYMENT:DE}
+  RSA_MODULUS: ${RSA_MODULUS:38N8BuU+JqB3DlSHcZfsvCCNQAB+wAWILcog9teLmKSiAKXOiBM4MzjcuW+521lT4stdwUEYkx99rZXMuDCKRCN9kt0w42QJyWQ35Hx4LQG7tgqGfNrjszwR0ngpznepCPJl82VhT7HzJreW0+DeV0vvZHqxfgmrFJoT7Uoh5Lc=}
+  RSA_EXPONENT: ${RSA_EXPONENT:AQAB}
+  #  BRANCH_ID: ${BRANCH_ID:KE040012}
+  SYSTEM_ID: ${SYSTEM_ID:143a7eb7-b1a2-49d0-8bea-036e36474d4a}
+  MASTERCARD_ENDPOINT: ${MASTERCARD_ENDPOINT:https://demo-pay.transfast.net/}
+  auto_push_bridge: ${AUTO_PUSH_BRIDGE:false}
+  auto_send_lock: ${SEND_LOCK:false}
+  auto_send_scheduled_lock: ${SCHEDULED_LOCK:false}
+  auto_download_invoices: ${AUTO_DOWNLOAD_INVOICES:true}
+  auto_push_final_status: ${AUTO_SEND_FINAL_STATUS:false}
+  auto_pull_invoice: ${AUTO_PULL_INVOICE:false}
+  auto_process_downloaded_invoice: ${AUTO_PROCESS_DOWNLOADED_INVOICE:false}
+  auto_query_bridge: ${AUTO_QUERY_BRIDGE:false}
+  application_name: ${MASTERCARD_APPLICATION_NAME:UPESI0005}
+  fetch_payable_rate: ${MASTERCARD_FETCH_PAYABLE_RATE:6000}
+  mastercard_cleanup_rate: ${MASTERCARD_CLEANUP_RATE:60000}
+  payment_mode: ${MASTERCARD_PAYMENT_MODE:G,C}
+  send_to_tech_ops: ${APP_E_SEND_TO_TECH_OPS:joseph.kibe@switchlinkafrica.co.ke}
+  send_to_ops: ${APP_E_SEND_TO_OPS:joseph.kibe@switchlinkafrica.co.ke,sam@gmail.com}
+  smtp_host: ${APP_E_SMTP_HOST:smtp.office365.com}
+  username: ${APP_E_USERNAME:sla@switchlinkafrica.co.ke}
+  password: ${APP_E_PASSWORD:kdqpxyldlpnmsdnx}
+
+bridge:
+  endpoint: ${APP_BRIDGE_ENDPOINT:http://192.168.100.6:8500}
+  api_key: ${APP_BRIDGE_API_KEY:Jpfrk5qEol1}
+  api_password: ${APP_BRIDGE_API_PASSWORD:I6jTtlbKwcyTEXi}
+  hash_key: ${APP_BRIDGE_HASH_KEY:EiLieSh9ve2HookiVaiv9eiGah+Y3iet2li8fah0}
+
+logging:
+  pattern:
+    dateformat: 'yyyy-MM-dd HH:mm:ss.SSS XXX'
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} | ${app.name} | ${app.version} | %-20.20thread | %5p | %-25.25logger{25} : %m%n'
+    file: '%d{yyyy-MM-dd HH:mm:ss.SSS} | ${app.name} | ${app.version} | %-20.20thread | %5p | %-25.25logger{25} : %m%n'
+  level:
+    root: INFO
+    com:
+      sla.sla.mastercard: DEBUG
+  file:
+    name: ${LOG_PATH:/home/datadrive/logs/MASTERCARD_INBOUND/}${LOGFILE:today.log}
+  logback:
+    rollingpolicy:
+      file-name-pattern: ${LOG_PATH:/home/datadrive/logs/MASTERCARD_INBOUND/}%d{ddMMyyyy}.%i.log
+      max-history: 60
+      max-file-size: 800MB
+server:
+  port: ${APP_PORT:8017}

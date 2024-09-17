@@ -1,0 +1,46 @@
+#!/bin/bash
+: ${PORT:=8090}
+: ${VERSION:=2.0.1}
+: ${NAME:=mastercard}
+: ${REGISTRY:=switchlink1.azurecr.io}
+
+TAG=mastercard:$VERSION
+
+docker stop $NAME
+docker rm $NAME
+docker run -d -p $PORT:$PORT \
+ -e APP_PORT=8515 \
+ -e APP_DB_PASSWORD=admin \
+ -e APP_DB_USERNAME=postgres \
+ -e APP_DB_HOST=192.168.100.6 \
+ -e APP_DB_PORT=5435 \
+ -e APP_DB_NAME=mastercard \
+ -e MOBILE_API_USER=API_USER3 \
+ -e MOBILE_BRANCH_ID=KE040008 \
+ -e MOBILE_API_PASSWORD=Iop8*7 \
+ -e MOBILE_FORM_OF_PAYMENT=CD \
+ -e BANK_API_USER=API_USER2 \
+ -e BANK_API_PASSWORD=Asd@34 \
+ -e BANK_BRANCH_ID=KE040010 \
+ -e BANK_FORM_OF_PAYMENT=DE \
+ -e RSA_MODULUS=38N8BuU+JqB3DlSHcZfsvCCNQAB+wAWILcog9teLmKSiAKXOiBM4MzjcuW+521lT4stdwUEYkx99rZXMuDCKRCN9kt0w42QJyWQ35Hx4LQG7tgqGfNrjszwR0ngpznepCPJl82VhT7HzJreW0+DeV0vvZHqxfgmrFJoT7Uoh5Lc= \
+ -e RSA_COMPONENT=AQAB \
+ -e SYSTEM_ID=143a7eb7-b1a2-49d0-8bea-036e36474d4a \
+ -e MASTERCARD_ENDPOINT=https://demo-pay.transfast.net/ \
+ -e MASTERCARD_AUTO_PUSH_BRIDGE=TRUE \
+ -e MASTERCARD_AUTO_QUERY_BRIDGE=TRUE \
+ -e MASTERCARD_APPLICATION_NAME=UPESI0005 \
+ -e MASTERCARD_FETCH_PAYABLE_RATE=6000 \
+ -e MASTERCARD_PAYMENT_MODE=G,C \
+ -e APP_BRIDGE_ENDPOINT=http://192.168.100.6:8500 \
+ -e APP_BRIDGE_API_KEY=Jpfrk5qEol2 \
+ -e APP_BRIDGE_API_PASSWORD=I6jTtlbKwcyTEXi \
+ -e APP_BRIDGE_HASH_KEY=EiLieSh9ve2HookiVaiv9eiGah+Y3iet2li8fah0 \
+ -e LOG_PATH=/datadrive/logs/MONEYTRANS/ \
+ -e LOGFILE=TODAY.log \
+ --add-host db:172.17.0.1 \
+ --add-host http://globalapi:8500 \
+ -v datadrive/logs/MASTERCARD_INBOUND/:datadrive/logs/MASTERCARD_INBOUND/ --name $NAME $REGISTRY/$TAG
+
+docker logs -f $NAME
+
